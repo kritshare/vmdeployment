@@ -1,0 +1,25 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'vmdeploy-conn'
+    subscriptionId: 'fb7729c0-cd35-4805-92bd-3370229cad03'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'myresourcegroup'
+    location: 'Canada Central'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'https://raw.githubusercontent.com/kritshare/vmdeployment/master/CreateWebApp/azuredeploy.json'
+    overrideParameters: '-projectName vmdeployment'
+    deploymentMode: 'Incremental'
+    deploymentName: 'DeployPipelineTemplate'
